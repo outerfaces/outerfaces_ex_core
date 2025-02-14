@@ -1,21 +1,17 @@
 # Outerfaces
 
-**TODO: Add description**
+[![Hex.pm](https://img.shields.io/hexpm/v/<package_name>.svg)](https://hex.pm/packages/outerfaces)
+[![HexDocs](https://img.shields.io/badge/hex-docs-blue.svg)](https://hexdocs.pm/outerfaces)
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `outerfaces_ex_core` to your list of dependencies in `mix.exs`:
+This package can be installed by adding `outerfaces` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:outerfaces_ex_core, "~> 0.1.0"}
+    {:outerfaces, "~> 0.1.0"}
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/outerfaces_ex_core>.
 
