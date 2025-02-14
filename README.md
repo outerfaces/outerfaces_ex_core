@@ -1,6 +1,6 @@
 # Outerfaces
 
-[![Hex.pm](https://img.shields.io/hexpm/v/<package_name>.svg)](https://hex.pm/packages/outerfaces)
+[![Hex.pm](https://img.shields.io/hexpm/v/outerfaces.svg)](https://hex.pm/packages/outerfaces)
 [![HexDocs](https://img.shields.io/badge/hex-docs-blue.svg)](https://hexdocs.pm/outerfaces)
 
 ## Installation
