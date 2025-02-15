@@ -20,7 +20,7 @@ defmodule Mix.Tasks.Outerfaces.Dist do
   ```
   """
   use Mix.Task
-  @otp_app :outerfaces
+  @otp_app_config_key :outerfaces
   @source_dir "./outerfaces/"
   @target_dir "./priv/static/outerfaces"
   @target_base_path "./"
@@ -59,8 +59,8 @@ defmodule Mix.Tasks.Outerfaces.Dist do
   end
 
   defp copy_environment_files do
-    apps_config = Application.get_env(@otp_app, :apps, [])
-    app_env_config = Application.get_env(@otp_app, :app_environments, [])
+    apps_config = Application.get_env(@otp_app_config_key, :apps, [])
+    app_env_config = Application.get_env(@otp_app_config_key, :app_environments, [])
 
     Enum.each(apps_config, fn app ->
       case Keyword.get(app_env_config, String.to_atom(app)) do
