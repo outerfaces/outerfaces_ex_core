@@ -17,6 +17,7 @@ defmodule Outerfaces.Endpoints.DefaultInitializer do
         ) ::
           {module(), Keyword.t()} | nil
   def supervisor(otp_app_slug, web_app_module, projects, opts) do
+    show_deprecation_warning()
     do_build_supervisor(
       otp_app_slug,
       web_app_module,
@@ -24,6 +25,14 @@ defmodule Outerfaces.Endpoints.DefaultInitializer do
       @base_port,
       opts
     )
+  end
+
+  def show_deprecation_warning() do
+    Logger.warning("""
+      Deprecation Warning:
+      You are using #{__MODULE__}, which is intended as a starting point.
+      Please create a module for initialization in place of this.
+    """)
   end
 
   @spec do_build_supervisor(

@@ -21,9 +21,9 @@ defmodule Mix.Tasks.Outerfaces.Dist do
   """
   use Mix.Task
   @otp_app :outerfaces
-  @source_dir "outerfaces/"
-  @target_dir "priv/static/outerfaces"
-  @target_base_path "/app/"
+  @source_dir "./outerfaces/"
+  @target_dir "./priv/static/outerfaces"
+  @target_base_path "./"
 
   @shortdoc "Copies outerfaces projects to the priv/static/outerfaces directory"
 

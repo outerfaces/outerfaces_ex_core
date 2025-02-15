@@ -7,6 +7,8 @@ defmodule Outerfaces.Endpoints.DynamicLoader.DefaultDynamicLoader do
   @default_base_port 4242
 
   @behaviour Outerfaces.Endpoints.DynamicLoader.DynamicLoaderBehavior
+  alias Outerfaces.Plugs.ContentSecurityPolicies.DefaultCSP
+  alias Outerfaces.Plugs.ServeIndex.DefaultServeIndex
 
   require Logger
 
@@ -14,14 +16,13 @@ defmodule Outerfaces.Endpoints.DynamicLoader.DefaultDynamicLoader do
     Logger.warning("""
       Deprecation Warning:
       You are using #{__MODULE__}, which is intended as a starting point.
-      Please set your project-specific configurations in place of these.
+      Please create a module for dynamic endpoint loading in place of this.
     """)
   end
 
   @impl true
   def endpoint_config_for_project(project_name, port, app_web_module)
       when is_binary(project_name) and is_integer(port) and is_atom(app_web_module) do
-    show_deprecation_warning()
     Logger.debug("#{__MODULE__} Creating endpoint config for #{project_name}")
 
     [
@@ -64,9 +65,9 @@ defmodule Outerfaces.Endpoints.DynamicLoader.DefaultDynamicLoader do
 
           plug(Plug.Logger, log: :debug)
 
-          plug(Outerfaces.Plugs.CSP.DefaultCSP)
+          plug(DefaultCSP)
 
-          plug(Outerfaces.Plugs.ServeIndex.DefaultServeIndex,
+          plug(DefaultServeIndex,
             index_path: "#{unquote(project_path)}/index.html",
             static_root: unquote(project_path)
           )
@@ -81,6 +82,7 @@ defmodule Outerfaces.Endpoints.DynamicLoader.DefaultDynamicLoader do
       when is_list(project_directories) and is_atom(app_slug) and
              is_atom(app_web_module) and is_list(opts) do
     Logger.debug("#{__MODULE__}: Generating endpoint modules")
+    show_deprecation_warning()
 
     Enum.each(project_directories, fn project ->
       prepare_endpoint_module(
