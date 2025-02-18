@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Outerfaces.Copy do
   First clears the target directory.
   """
   use Mix.Task
-  @base_dir "/app/"
+  @base_dir "./"
 
   def run(args \\ []) when is_list(args) do
     opts = parse_args(args)
@@ -22,6 +22,17 @@ defmodule Mix.Tasks.Outerfaces.Copy do
       [key, value] = String.split(arg, "=")
       [{String.to_atom(key), value} | acc]
     end)
+  end
+
+  @spec copy_files(source_dir :: String.t(), target_dir :: String.t()) :: :ok
+  def copy_files(source_dir, target_dir)
+      when is_binary(source_dir) and is_binary(target_dir) do
+    full_target_dir_path = Path.expand(target_dir)
+    File.rm_rf!(full_target_dir_path)
+    File.mkdir_p!(full_target_dir_path)
+    full_source_dir_path = Path.expand(source_dir)
+    File.cp_r!(full_source_dir_path, full_target_dir_path)
+    :ok
   end
 
   def copy_files(source_dir, target_dir, base_dir)

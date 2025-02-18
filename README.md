@@ -14,7 +14,7 @@ Add `outerfaces` to your `mix.exs` dependencies:
 # mix.exs
 def deps do
   [
-    {:outerfaces, "~> 0.2.0"}
+    {:outerfaces, "~> 0.2.1"}
   ]
 end
 ```
