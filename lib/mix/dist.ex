@@ -25,8 +25,11 @@ defmodule Mix.Tasks.Outerfaces.Dist do
   @target_dir "./priv/static/outerfaces"
   @target_base_path "./"
 
-  @shortdoc "Copies outerfaces projects to the priv/static/outerfaces directory"
+  @shortdoc "Copies all outerfaces projects to the priv/static/outerfaces directory"
 
+  @doc """
+  Copies all outerfaces projects to the priv/static/outerfaces directory
+  """
   def run(args \\ []) do
     opts = parse_args(args)
 

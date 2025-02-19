@@ -6,6 +6,12 @@ defmodule Mix.Tasks.Outerfaces.Copy do
   use Mix.Task
   @base_dir "./"
 
+  @doc """
+  Copies files from the source_dir to the target_dir.
+  First clears the target directory.
+  """
+  @shortdoc "Copies files from the source_dir to the target_dir"
+  @spec run(args :: list(String.t())) :: :ok
   def run(args \\ []) when is_list(args) do
     opts = parse_args(args)
     source_base_path = Keyword.get(opts, :source_base_path, @base_dir)
