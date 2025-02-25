@@ -1,23 +1,6 @@
 defmodule Mix.Tasks.Outerfaces.Dist do
   @moduledoc """
   Copies outerfaces projects to the priv/static/outerfaces directory
-
-  If there is a specific environment for a project, it will copy the environment file
-  to the target directory. The configuration for the apps and their environments is
-  defined in the phoenix app configuration in the following format:
-
-  ```elixir
-  config :my_app,
-    apps: [
-      "my_app_cdn"
-      "my_feature_site",
-      "my_internal_site",
-      "my_experimental_site"
-    ],
-    app_environments: [
-      my_feature_site: :dev
-    ]
-  ```
   """
   use Mix.Task
   @otp_app_config_key :outerfaces

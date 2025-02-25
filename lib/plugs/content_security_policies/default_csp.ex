@@ -1,6 +1,6 @@
 defmodule Outerfaces.Plugs.ContentSecurityPolicies.DefaultCSP do
   @moduledoc """
-  A plug for setting Content Security Policy headers on responses.
+  A default example plug for setting Content Security Policy headers on responses.
   """
   import Plug.Conn
   alias Plug.Conn

@@ -1,6 +1,6 @@
 defmodule Outerfaces.Endpoints.DynamicLoader.DefaultDynamicLoader do
   @moduledoc """
-  Custom endpoint loader for Outerfaces projects.
+  Default example of a custom endpoint loader for Outerfaces projects.
   """
   @projects_dir_name "outerfaces"
   @ports_per_project 2

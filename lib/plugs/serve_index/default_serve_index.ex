@@ -1,6 +1,6 @@
 defmodule Outerfaces.Plugs.ServeIndex.DefaultServeIndex do
   @moduledoc """
-  Default Outerfaces plug to handle both static asset requests and index.html fallback.
+  A default example plug to handle both static asset requests and index.html fallback.
   """
 
   import Plug.Conn
