@@ -9,9 +9,13 @@ defmodule Outerfaces.Plugs.ServeIndex.DefaultServeIndex do
 
   @impl true
   def init(opts) do
+    static_root = Keyword.get(opts, :static_root, "priv/static")
+    root = Path.expand(static_root)
+    index_path = Keyword.get(opts, :index_path, Path.join(root, "index.html")) |> Path.expand()
+
     %{
-      index_path: Keyword.get(opts, :index_path, "priv/static/index.html"),
-      static_root: Keyword.get(opts, :static_root, "priv/static"),
+      index_path: index_path,
+      static_root: root,
       static_patterns: Keyword.get(opts, :static_patterns, default_static_patterns())
     }
   end
@@ -22,7 +26,7 @@ defmodule Outerfaces.Plugs.ServeIndex.DefaultServeIndex do
         static_root: static_root,
         static_patterns: static_patterns
       })
-      when is_binary(index_path) and is_binary(static_root) and is_list(static_patterns) do
+      when is_binary(index_path) and is_list(static_patterns) and is_binary(static_root) do
     request_path = conn.request_path
 
     cond do
@@ -34,20 +38,22 @@ defmodule Outerfaces.Plugs.ServeIndex.DefaultServeIndex do
     end
   end
 
-  defp serve_static_asset(conn, static_root, request_path) do
-    relative_request_path = String.trim_leading(request_path, "/")
-    full_path = Path.expand(Path.join(static_root, relative_request_path))
-
-    if File.exists?(full_path) and not File.dir?(full_path) do
-      mime_type = MIME.from_path(full_path) || "application/octet-stream"
+  defp serve_static_asset(conn, root, request_path) do
+    with false <- String.contains?(request_path, <<0>>),
+         rel <- String.trim_leading(request_path, "/"),
+         false <- String.contains?(rel, ["\\", ":"]),
+         candidate <- Path.expand(rel, root),
+         true <- candidate == root or String.starts_with?(candidate, root <> "/"),
+         true <- File.regular?(candidate) do
+      mime_type = MIME.from_path(candidate) || "application/octet-stream"
 
       conn
       |> put_resp_content_type(mime_type)
-      |> send_file(200, full_path)
+      |> send_file(200, candidate)
       |> halt()
     else
-      send_resp(conn, 404, "File not found")
-      |> halt()
+      _ ->
+        conn |> send_resp(404, "File not found") |> halt()
     end
   end
 
@@ -69,7 +75,6 @@ defmodule Outerfaces.Plugs.ServeIndex.DefaultServeIndex do
 
   defp default_static_patterns do
     [
-      ~r{\.html$},
       ~r{\.js$},
       ~r{\.css$},
       ~r{\.png$},
