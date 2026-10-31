@@ -86,7 +86,7 @@ Add `outerfaces` to your `mix.exs` dependencies:
 # mix.exs
 def deps do
   [
-    {:outerfaces, "~> 0.2.3"}
+    {:outerfaces, "~> 0.2.5"}
   ]
 end
 ```

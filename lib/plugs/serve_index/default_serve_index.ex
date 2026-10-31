@@ -45,7 +45,7 @@ defmodule Outerfaces.Plugs.ServeIndex.DefaultServeIndex do
          candidate <- Path.expand(rel, root),
          true <- candidate == root or String.starts_with?(candidate, root <> "/"),
          true <- File.regular?(candidate) do
-      mime_type = MIME.from_path(candidate) || "application/octet-stream"
+      mime_type = MIME.from_path(candidate)
 
       conn
       |> put_resp_content_type(mime_type)
